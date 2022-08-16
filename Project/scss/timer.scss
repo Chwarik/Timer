@@ -1,0 +1,91 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+}
+
+* {
+	position: relative;
+	box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	width: 100vw;
+	background-color: #1A2233;
+
+}
+
+.timer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+
+	&__tittle {
+		margin-bottom: 40px;
+
+		h1 {
+			margin: 0;
+			font-size: 40px;
+			color: #fff;
+			font-weight: 400;
+			font-family: 'Merriweather', serif;
+		}
+	}
+
+	&__inner {
+		display: flex;
+		justify-content: space-between;
+		width: 320px;
+
+		.time {
+			text-align: center;
+			margin: 0;
+			font-family: Barlow;
+			background: 0;
+			border: 0;
+			font-size: 64px;
+			width: 75px;
+			color: #fff;
+		}
+
+		.text {
+			text-align: center;
+			font-family: Barlow;
+			color: #fff;
+			font-size: 16px;
+			font-weight: 400;
+		}
+
+		span {
+			font-family: Barlow;
+			font-size: 64px;
+			color: #fff;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		justify-content: space-between;
+		width: 160px;
+		margin-top: 50px;
+
+		.button {
+			background: none;
+			border: 0;
+			width: 40px;
+			height: 40px;
+			cursor: pointer;
+			user-select: none;
+
+			&:hover {
+				transform: scale(1.3);
+				transition: .6s;
+			}
+		}
+	}
+}
