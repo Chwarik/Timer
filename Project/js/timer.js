@@ -16,7 +16,7 @@
 		el.onwheel = (e) => {
 			let value = Number(e.target.innerText);
 			let delta = e.deltaY;
-
+			// Прокрутка вперёд
 			if (delta < 0 && value < max) {
 				value = value + 1;
 				if (el === second) {
@@ -31,8 +31,8 @@
 						}
 					}
 					sec = value;
-					console.log(typeof sec);
-				}
+				};
+
 				if (el === minute) {
 					if (value == 60) {
 						value = '0';
@@ -50,10 +50,9 @@
 				if (el === hour) {
 					h = value;
 				}
-
-
 			} else if (value > 0) {
 				value = value - 1;
+				// Сделать прокрутку назад
 			}
 
 			if (value < 10) {
@@ -64,12 +63,6 @@
 		};
 	};
 
-	let secToMin = (sec, min) => {
-		min = min + 1;
-		sec = '00';
-	};
-
-
 	timeLimit(hour, 24);
 	timeLimit(minute, 60);
 	timeLimit(second, 60);
@@ -78,18 +71,16 @@
 	// Обработка кнопок
 	btnPlay.addEventListener('click', () => {
 		clearInterval(interval);
-		// startTimer();
-		interval = setInterval(startTimer, 100);
+		interval = setInterval(startTimer, 1000);
 		hour.classList.add('active');
 		minute.classList.add('active');
 		second.classList.add('active');
-
-
 	});
 
 	btnPause.addEventListener('click', () => {
 		clearInterval(interval);
 	});
+
 	btnStop.addEventListener('click', () => {
 		clearInterval(interval);
 		h = 0;
@@ -102,7 +93,6 @@
 		minute.classList.remove('active');
 		second.classList.remove('active');
 	});
-
 
 	function startTimer() {
 		// Обратный отсчет
@@ -120,10 +110,9 @@
 		};
 
 		// Секунды
-		if (sec < 9) {
+		if (sec <= 9) {
 			second.innerText = '0' + sec;
-		};
-		if (sec > 9) {
+		} else if (sec > 9) {
 			second.innerText = sec;
 		};
 
@@ -134,10 +123,9 @@
 		};
 
 		// Минуты
-		if (min < 9) {
+		if (min <= 9) {
 			minute.innerText = '0' + min;
-		};
-		if (min > 9) {
+		} else if (min > 9) {
 			minute.innerText = min;
 		};
 
@@ -148,10 +136,9 @@
 		};
 
 		// Часы
-		if (h < 9) {
+		if (h <= 9) {
 			hour.innerText = '0' + h;
-		};
-		if (h > 9) {
+		} else if (h > 9) {
 			hour.innerText = h;
 		};
 	};

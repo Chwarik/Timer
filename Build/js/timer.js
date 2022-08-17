@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 (function () {
   // let time = document.querySelectorAll('.time'); и forEach
   var hour = document.querySelector('.hour');
@@ -18,7 +16,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   var timeLimit = function timeLimit(el, max) {
     el.onwheel = function (e) {
       var value = Number(e.target.innerText);
-      var delta = e.deltaY;
+      var delta = e.deltaY; // Прокрутка вперёд
 
       if (delta < 0 && value < max) {
         value = value + 1;
@@ -36,8 +34,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           }
 
           sec = value;
-          console.log(_typeof(sec));
         }
+
+        ;
 
         if (el === minute) {
           if (value == 60) {
@@ -58,7 +57,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           h = value;
         }
       } else if (value > 0) {
-        value = value - 1;
+        value = value - 1; // Сделать прокрутку назад
       }
 
       if (value < 10) {
@@ -69,19 +68,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     };
   };
 
-  var secToMin = function secToMin(sec, min) {
-    min = min + 1;
-    sec = '00';
-  };
-
   timeLimit(hour, 24);
   timeLimit(minute, 60);
   timeLimit(second, 60); // Обработка кнопок
 
   btnPlay.addEventListener('click', function () {
-    clearInterval(interval); // startTimer();
-
-    interval = setInterval(startTimer, 100);
+    clearInterval(interval);
+    interval = setInterval(startTimer, 1000);
     hour.classList.add('active');
     minute.classList.add('active');
     second.classList.add('active');
@@ -123,13 +116,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
     ; // Секунды
 
-    if (sec < 9) {
+    if (sec <= 9) {
       second.innerText = '0' + sec;
-    }
-
-    ;
-
-    if (sec > 9) {
+    } else if (sec > 9) {
       second.innerText = sec;
     }
 
@@ -143,13 +132,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
     ; // Минуты
 
-    if (min < 9) {
+    if (min <= 9) {
       minute.innerText = '0' + min;
-    }
-
-    ;
-
-    if (min > 9) {
+    } else if (min > 9) {
       minute.innerText = min;
     }
 
@@ -163,13 +148,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
     ; // Часы
 
-    if (h < 9) {
+    if (h <= 9) {
       hour.innerText = '0' + h;
-    }
-
-    ;
-
-    if (h > 9) {
+    } else if (h > 9) {
       hour.innerText = h;
     }
 

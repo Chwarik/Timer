@@ -52,11 +52,11 @@ body {
 			width: 75px;
 			color: #fff;
 
+			&.active {
+				pointer-events: none;
+			}
 		}
 
-		.active {
-			pointer-events: none;
-		}
 
 		.text {
 			text-align: center;
