@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 (function () {
   // let time = document.querySelectorAll('.time'); и forEach
   var hour = document.querySelector('.hour');
@@ -23,13 +25,30 @@
 
         if (el === second) {
           if (value == 60) {
-            value = '0';
-            minute.innerText = Number(minute.innerText) + 1;
+            min = min + 1;
+            value = 0;
+            minute.innerText = min;
 
-            if (minute.innerText < 10) {
-              minute.innerText = '0' + minute.innerText;
+            if (min == 60) {
+              h = h + 1;
+              min = 0;
+
+              if (Number(hour.innerText) < 9) {
+                hour.innerText = '0' + h;
+                console.log(_typeof(h));
+                console.log(h);
+              } else {
+                hour.innerText = h;
+                console.log(h);
+              }
+
+              minute.innerText = '';
+            }
+
+            if (Number(minute.innerText) < 10) {
+              minute.innerText = '0' + min;
             } else {
-              minute.innerText = minute.innerText;
+              minute.innerText = min;
             }
           }
 
@@ -40,13 +59,14 @@
 
         if (el === minute) {
           if (value == 60) {
-            value = '0';
-            hour.innerText = Number(hour.innerText) + 1;
+            value = 0;
+            h = h + 1;
+            hour.innerText = h;
 
             if (hour.innerText < 10) {
-              hour.innerText = '0' + hour.innerText;
+              hour.innerText = '0' + h;
             } else {
-              hour.innerText = hour.innerText;
+              hour.innerText = h;
             }
           }
 

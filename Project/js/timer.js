@@ -21,13 +21,29 @@
 				value = value + 1;
 				if (el === second) {
 					if (value == 60) {
-						value = '0';
-						minute.innerText = Number(minute.innerText) + 1;
+						min = min + 1;
+						value = 0;
+						minute.innerText = min;
 
-						if (minute.innerText < 10) {
-							minute.innerText = '0' + minute.innerText;
+						if (min == 60) {
+							h = h + 1;
+							min = 0;
+							if (Number(hour.innerText) < 9) {
+								hour.innerText = '0' + h;
+								console.log(typeof h);
+								console.log(h);
+
+							} else {
+								hour.innerText = h;
+								console.log(h);
+							}
+							minute.innerText = '';
+						}
+
+						if (Number(minute.innerText) < 10) {
+							minute.innerText = '0' + min;
 						} else {
-							minute.innerText = minute.innerText;
+							minute.innerText = min;
 						}
 					}
 					sec = value;
@@ -35,13 +51,14 @@
 
 				if (el === minute) {
 					if (value == 60) {
-						value = '0';
-						hour.innerText = Number(hour.innerText) + 1;
+						value = 0;
+						h = h + 1;
+						hour.innerText = h;
 
 						if (hour.innerText < 10) {
-							hour.innerText = '0' + hour.innerText;
+							hour.innerText = '0' + h;
 						} else {
-							hour.innerText = hour.innerText;
+							hour.innerText = h;
 						}
 					}
 					min = value;
