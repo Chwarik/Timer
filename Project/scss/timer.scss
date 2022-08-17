@@ -51,6 +51,11 @@ body {
 			font-size: 64px;
 			width: 75px;
 			color: #fff;
+
+		}
+
+		.active {
+			pointer-events: none;
 		}
 
 		.text {

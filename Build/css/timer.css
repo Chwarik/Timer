@@ -66,6 +66,9 @@ body {
 				width: 75px;
 				color: #fff;
 }
+.timer__inner .active {
+				pointer-events: none;
+}
 .timer__inner .text {
 				text-align: center;
 				font-family: Barlow;

@@ -1,4 +1,5 @@
 (function () {
+	// let time = document.querySelectorAll('.time'); и forEach
 	let hour = document.querySelector('.hour');
 	let minute = document.querySelector('.minute');
 	let second = document.querySelector('.second');
@@ -10,17 +11,6 @@
 	let min = 0;
 	let sec = 0;
 	let interval;
-
-
-	/* second.addEventListener('wheel', function(e) {
-		let value = Number(e.target.innerText);
-		let delta = e.deltaY;
-
-		if (delta < 0 && value == 60) {
-			value = '00';
-			minute.innerText = Number(minute.innerText) + 1;
-		};
-	}) */
 
 	let timeLimit = (el, max) => {
 		el.onwheel = (e) => {
@@ -90,6 +80,11 @@
 		clearInterval(interval);
 		// startTimer();
 		interval = setInterval(startTimer, 100);
+		hour.classList.add('active');
+		minute.classList.add('active');
+		second.classList.add('active');
+
+
 	});
 
 	btnPause.addEventListener('click', () => {
@@ -103,10 +98,27 @@
 		second.textContent = '00';
 		minute.textContent = '00';
 		hour.textContent = '00';
+		hour.classList.remove('active');
+		minute.classList.remove('active');
+		second.classList.remove('active');
 	});
 
 
 	function startTimer() {
+		// Обратный отсчет
+		if ((h > 0 && sec >= 0) || (min > 0 && sec >= 0) || sec > 0) {
+			if (h > 0 && min == 0) {
+				h = h - 1;
+				min = 60;
+			};
+
+			if (min > 0 && sec == 0) {
+				min = min - 1;
+				sec = 60;
+			};
+			sec--;
+		};
+
 		// Секунды
 		if (sec < 9) {
 			second.innerText = '0' + sec;
@@ -116,7 +128,6 @@
 		};
 
 		if (sec > 59) {
-			// min++
 			minute.innerText = '0' + min;
 			sec = 0;
 			second.innerText = '0' + sec;
@@ -131,7 +142,6 @@
 		};
 
 		if (min > 59) {
-			// hour++;
 			hour.innerText = '0' + h;
 			min = 0;
 			minute.innerText = '0' + min;
@@ -144,34 +154,5 @@
 		if (h > 9) {
 			hour.innerText = h;
 		};
-
-		// Обратный отсчет
-		/* if (h > 0) {
-			if (min > 0) {
-				if (sec > 0) {
-					sec--;
-				};
-			};
-		} else {
-			if (min > 0) {
-
-			}
-		}; */
-
-		if ((h > 0 && sec > 0) || (min > 0 && sec > 0)) {
-			if (h > 0 && min == 1) {
-				h = h - 1;
-				min = 60;
-			};
-			if (min > 0 && sec == 1) {
-				min = min - 1;
-				sec = 60;
-			};
-			sec--;
-			console.log(sec);
-		};
 	};
-
-
-
 }());
