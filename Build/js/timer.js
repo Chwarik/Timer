@@ -1,9 +1,7 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 (function () {
-  // let time = document.querySelectorAll('.time'); и forEach
+  var time = document.querySelectorAll('.time');
   var hour = document.querySelector('.hour');
   var minute = document.querySelector('.minute');
   var second = document.querySelector('.second');
@@ -24,22 +22,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         value = value + 1;
 
         if (el === second) {
-          if (value == 60) {
+          if (value == max) {
             min = min + 1;
             value = 0;
             minute.innerText = min;
 
-            if (min == 60) {
+            if (min == max) {
               h = h + 1;
               min = 0;
 
               if (Number(hour.innerText) < 9) {
                 hour.innerText = '0' + h;
-                console.log(_typeof(h));
-                console.log(h);
               } else {
                 hour.innerText = h;
-                console.log(h);
               }
 
               minute.innerText = '';
@@ -58,7 +53,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         ;
 
         if (el === minute) {
-          if (value == 60) {
+          if (value == max) {
             value = 0;
             h = h + 1;
             hour.innerText = h;
@@ -76,8 +71,63 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         if (el === hour) {
           h = value;
         }
-      } else if (value > 0) {
-        value = value - 1; // Сделать прокрутку назад
+      } else if (delta > 0 && value >= 0) {
+        // Прокрутка назад
+        if (el === hour) {
+          h = value;
+        }
+
+        if (el === minute) {
+          if (h > 0) {
+            if (value == 0) {
+              value = max;
+              h = h - 1;
+              hour.innerText = h;
+
+              if (Number(hour.innerText) <= 9) {
+                hour.innerText = '0' + h;
+              }
+            }
+          }
+
+          min = value;
+        }
+
+        if (el === second) {
+          if (min > 0 || h > 0) {
+            if (value == 0) {
+              value = max;
+
+              if (min > 0) {
+                min = min - 1;
+                console.log(min);
+
+                if (Number(minute.innerText) < 10) {
+                  minute.innerText = '0' + min;
+                } else {
+                  minute.innerText = min;
+                }
+              }
+
+              if (min == 0 && h > 0) {
+                h = h - 1;
+                min = max - 1;
+
+                if (Number(hour.innerText) < 10) {
+                  hour.innerText = '0' + h;
+                } else {
+                  hour.innerText = h;
+                }
+              }
+            }
+          }
+
+          sec = value;
+        }
+
+        if (value > 0) {
+          value = value - 1;
+        }
       }
 
       if (value < 10) {
@@ -95,9 +145,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   btnPlay.addEventListener('click', function () {
     clearInterval(interval);
     interval = setInterval(startTimer, 1000);
-    hour.classList.add('active');
-    minute.classList.add('active');
-    second.classList.add('active');
+    time.forEach(function (time) {
+      time.classList.add('active');
+    });
   });
   btnPause.addEventListener('click', function () {
     clearInterval(interval);
@@ -110,9 +160,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     second.textContent = '00';
     minute.textContent = '00';
     hour.textContent = '00';
-    hour.classList.remove('active');
-    minute.classList.remove('active');
-    second.classList.remove('active');
+    time.forEach(function (time) {
+      time.classList.remove('active');
+    });
   });
 
   function startTimer() {

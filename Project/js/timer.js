@@ -1,5 +1,5 @@
 (function () {
-	// let time = document.querySelectorAll('.time'); и forEach
+	let time = document.querySelectorAll('.time');
 	let hour = document.querySelector('.hour');
 	let minute = document.querySelector('.minute');
 	let second = document.querySelector('.second');
@@ -20,22 +20,19 @@
 			if (delta < 0 && value < max) {
 				value = value + 1;
 				if (el === second) {
-					if (value == 60) {
+					if (value == max) {
 						min = min + 1;
 						value = 0;
 						minute.innerText = min;
 
-						if (min == 60) {
+						if (min == max) {
 							h = h + 1;
 							min = 0;
 							if (Number(hour.innerText) < 9) {
 								hour.innerText = '0' + h;
-								console.log(typeof h);
-								console.log(h);
 
 							} else {
 								hour.innerText = h;
-								console.log(h);
 							}
 							minute.innerText = '';
 						}
@@ -50,7 +47,7 @@
 				};
 
 				if (el === minute) {
-					if (value == 60) {
+					if (value == max) {
 						value = 0;
 						h = h + 1;
 						hour.innerText = h;
@@ -67,9 +64,61 @@
 				if (el === hour) {
 					h = value;
 				}
-			} else if (value > 0) {
-				value = value - 1;
-				// Сделать прокрутку назад
+			} else if (delta > 0 && value >= 0) {
+				// Прокрутка назад
+				if (el === hour) {
+					h = value;
+				}
+
+				if (el === minute) {
+					if (h > 0) {
+						if (value == 0) {
+							value = max;
+							h = h - 1;
+							hour.innerText = h;
+
+							if (Number(hour.innerText) <= 9) {
+								hour.innerText = '0' + h;
+							}
+						}
+					}
+					min = value;
+				}
+
+				if (el === second) {
+					if (min > 0 || h > 0) {
+						if (value == 0) {
+							value = max;
+							if (min > 0) {
+								min = min - 1;
+								console.log(min);
+
+								if (Number(minute.innerText) < 10) {
+									minute.innerText = '0' + min;
+								} else {
+									minute.innerText = min;
+								}
+							}
+
+							if (min == 0 && h > 0) {
+								h = h - 1;
+								min = max - 1;
+
+								if (Number(hour.innerText) < 10) {
+									hour.innerText = '0' + h;
+
+								} else {
+									hour.innerText = h;
+								}
+							}
+						}
+					}
+					sec = value;
+				}
+				if (value > 0) {
+					value = value - 1;
+				}
+
 			}
 
 			if (value < 10) {
@@ -89,9 +138,10 @@
 	btnPlay.addEventListener('click', () => {
 		clearInterval(interval);
 		interval = setInterval(startTimer, 1000);
-		hour.classList.add('active');
-		minute.classList.add('active');
-		second.classList.add('active');
+
+		time.forEach((time) => {
+			time.classList.add('active');
+		});
 	});
 
 	btnPause.addEventListener('click', () => {
@@ -106,9 +156,10 @@
 		second.textContent = '00';
 		minute.textContent = '00';
 		hour.textContent = '00';
-		hour.classList.remove('active');
-		minute.classList.remove('active');
-		second.classList.remove('active');
+
+		time.forEach((time) => {
+			time.classList.remove('active');
+		});
 	});
 
 	function startTimer() {
