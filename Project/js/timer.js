@@ -223,14 +223,15 @@
 		if (h == 0 && min == 0 && sec ==0) {
 			clearInterval(interval);
 
-			time.forEach((time) => {
-				time.classList.remove('active');
-			});
 
 			sound.loop = true;
 			sound.play();
 			setTimeout(function() {
 				sound.loop = false;
+
+				time.forEach((time) => {
+					time.classList.remove('active');
+				});
 			}, 60000);
 		};
 	};
