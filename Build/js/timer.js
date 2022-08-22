@@ -166,8 +166,8 @@
       time.classList.remove('active');
     });
     sound.loop = false;
-    sound.currentTime = 0;
     sound.pause();
+    sound.currentTime = 0;
   });
 
   function startTimer() {
@@ -238,7 +238,9 @@
 
     if (h == 0 && min == 0 && sec == 0) {
       clearInterval(interval);
-      console.log('Finish!!!');
+      time.forEach(function (time) {
+        time.classList.remove('active');
+      });
       sound.loop = true;
       sound.play();
       setTimeout(function () {
