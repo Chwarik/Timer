@@ -6,6 +6,7 @@
 	let btnStop = document.querySelector('.btnStop');
 	let btnPlay = document.querySelector('.btnPlay');
 	let btnPause = document.querySelector('.btnPause');
+	let sound = document.getElementById('sound');
 
 	let h = 0;
 	let min = 0;
@@ -65,6 +66,9 @@
 					h = value;
 				}
 			} else if (delta > 0 && value >= 0) {
+				if (value > 0) {
+					value = value - 1;
+				}
 				// Прокрутка назад
 				if (el === hour) {
 					h = value;
@@ -91,7 +95,6 @@
 							value = max;
 							if (min > 0) {
 								min = min - 1;
-								console.log(min);
 
 								if (Number(minute.innerText) < 10) {
 									minute.innerText = '0' + min;
@@ -102,7 +105,9 @@
 
 							if (min == 0 && h > 0) {
 								h = h - 1;
+								sec = max;
 								min = max - 1;
+								minute.innerHTML = min;
 
 								if (Number(hour.innerText) < 10) {
 									hour.innerText = '0' + h;
@@ -115,10 +120,6 @@
 					}
 					sec = value;
 				}
-				if (value > 0) {
-					value = value - 1;
-				}
-
 			}
 
 			if (value < 10) {
@@ -160,19 +161,28 @@
 		time.forEach((time) => {
 			time.classList.remove('active');
 		});
+
+		sound.loop = false;
+		sound.currentTime = 0;
+		sound.pause();
 	});
 
 	function startTimer() {
 		// Обратный отсчет
 		if ((h > 0 && sec >= 0) || (min > 0 && sec >= 0) || sec > 0) {
-			if (h > 0 && min == 0) {
-				h = h - 1;
-				min = 60;
-			};
 
-			if (min > 0 && sec == 0) {
-				min = min - 1;
-				sec = 60;
+			if (sec == 0) {
+				if (min > 0) {
+					min = min - 1;
+					sec = 60;
+				} else if (min == 0) {
+					if (h > 0) {
+						h = h - 1;
+						min = 59;
+						sec = 60;
+					};
+				};
+
 			};
 			sec--;
 		};
@@ -208,6 +218,17 @@
 			hour.innerText = '0' + h;
 		} else if (h > 9) {
 			hour.innerText = h;
+		};
+
+		if (h == 0 && min == 0 && sec ==0) {
+			clearInterval(interval);
+			console.log('Finish!!!');
+
+			sound.loop = true;
+			sound.play();
+			setTimeout(function() {
+				sound.loop = false;
+			}, 60000);
 		};
 	};
 }());
